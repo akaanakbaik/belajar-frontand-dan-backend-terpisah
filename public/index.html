@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKADEV AI CHAT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        AkaDev AI /// V.1.0
+    </header>
+
+    <div class="chat-box" id="chatBox">
+        <div class="message bot">Halo! Gue AI Neobrutalis. Tanya apa aja!</div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Ketik sesuatu..." autocomplete="off">
+        <button onclick="sendMessage()">KIRIM</button>
+    </div>
+</div>
+
+<script>
+    // GANTI INI DENGAN IP PUBLIC VPS PTERODACTYL DAN PORT 2019
+    // Jika panel ada di domain, cek node IP-nya.
+    // Contoh: http://194.233.xx.xx:2019
+    const API_URL = "http://193.23.209.130:2019/chat"; 
+
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+
+    userInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") sendMessage();
+    });
+
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.classList.add('message', sender);
+        div.innerText = text;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const text = userInput.value;
+        if (!text.trim()) return;
+
+        addMessage(text, 'user');
+        userInput.value = '';
+
+        // Tampilkan loading sementara
+        const loadingDiv = document.createElement('div');
+        loadingDiv.classList.add('message', 'bot', 'loading');
+        loadingDiv.innerText = "Sedang mengetik...";
+        chatBox.appendChild(loadingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: text })
+            });
+
+            const data = await response.json();
+            
+            // Hapus loading
+            chatBox.removeChild(loadingDiv);
+
+            if (data.status) {
+                addMessage(data.reply, 'bot');
+            } else {
+                addMessage("Error: " + data.message, 'bot');
+            }
+
+        } catch (error) {
+            chatBox.removeChild(loadingDiv);
+            addMessage("Gagal terhubung ke Backend Pterodactyl. Pastikan server nyala dan tidak terblokir Mixed Content.", 'bot');
+            console.error(error);
+        }
+    }
+</script>
+
+</body>
+</html>
