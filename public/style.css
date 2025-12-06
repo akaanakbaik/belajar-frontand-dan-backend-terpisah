@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+    --bg: #E0E7FF;
+    --card-bg: #FFFFFF;
+    --main: #FF6B6B; /* Merah Muda */
+    --accent: #4ECDC4; /* Tosca */
+    --black: #1A1A1A;
+    --border: 3px solid var(--black);
+    --shadow: 5px 5px 0px 0px var(--black);
+    --shadow-active: 2px 2px 0px 0px var(--black);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background-color: var(--bg);
+    font-family: 'Space Mono', monospace;
+    color: var(--black);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: var(--card-bg);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+}
+
+header {
+    background: var(--main);
+    border: var(--border);
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow);
+}
+
+.chat-box {
+    flex: 1;
+    border: var(--border);
+    background: #f4f4f4;
+    padding: 15px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border: var(--border);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.user {
+    align-self: flex-end;
+    background-color: var(--accent);
+    box-shadow: var(--shadow);
+    margin-right: 5px;
+}
+
+.bot {
+    align-self: flex-start;
+    background-color: #FFD93D; /* Kuning */
+    box-shadow: -5px 5px 0px 0px var(--black);
+    margin-left: 5px;
+}
+
+.input-area {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 15px;
+    border: var(--border);
+    background: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    outline: none;
+    box-shadow: var(--shadow);
+    transition: all 0.1s;
+}
+
+input[type="text"]:focus {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-active);
+}
+
+button {
+    padding: 0 25px;
+    background: var(--black);
+    color: white;
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    border: var(--border);
+    box-shadow: var(--shadow);
+    transition: all 0.1s;
+}
+
+button:active {
+    transform: translate(3px, 3px);
+    box-shadow: var(--shadow-active);
+}
+
+/* Scrollbar Keren */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #fff; border-left: 3px solid #000; }
+::-webkit-scrollbar-thumb { background: #000; }
+::-webkit-scrollbar-thumb:hover { background: #333; }
+
+.loading { font-size: 0.8rem; font-style: italic; color: #666; }
